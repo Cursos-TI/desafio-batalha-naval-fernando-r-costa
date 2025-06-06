@@ -52,6 +52,56 @@ int main() {
         printf("Erro: o navio não cabe na posição especificada.\n");
     }
 
+    // Define o navio diagonal descendente (↘)
+    int navio_diagonal_desc[3] = {3, 3, 3};
+    int linha_inicio_diag_desc = 1;
+    int coluna_inicio_diag_desc = 6;
+
+    // Verifica se cabe e não sobrepõe para imprimir o navio diagonal descendente
+    if (linha_inicio_diag_desc + 3 <= linhas_tabuleiro && coluna_inicio_diag_desc + 3 <= colunas_tabuleiro) {
+        int pode_colocar = 1;
+        for (int i = 0; i < 3; i++) {
+            if (tabuleiro[linha_inicio_diag_desc + i][coluna_inicio_diag_desc + i] != 0) {
+                pode_colocar = 0;
+                break;
+            }
+        }
+        if (pode_colocar) {
+            for (int i = 0; i < 3; i++) {
+                tabuleiro[linha_inicio_diag_desc + i][coluna_inicio_diag_desc + i] = navio_diagonal_desc[i];
+            }
+        } else {
+            printf("Erro: sobreposição detectada no navio diagonal descendente.\n");
+        }
+    } else {
+        printf("Erro: o navio diagonal descendente não cabe na posição especificada.\n");
+    }
+
+    // Define o navio diagonal ascendente (↗)
+    int navio_diagonal_asc[3] = {3, 3, 3};
+    int linha_inicio_diag_asc = 8;
+    int coluna_inicio_diag_asc = 0;
+
+    // Verifica se cabe e não sobrepõe para imprimir o navio diagonal ascendente
+    if (linha_inicio_diag_asc - 2 >= 0 && coluna_inicio_diag_asc + 3 <= colunas_tabuleiro) {
+        int pode_colocar = 1;
+        for (int i = 0; i < 3; i++) {
+            if (tabuleiro[linha_inicio_diag_asc - i][coluna_inicio_diag_asc + i] != 0) {
+                pode_colocar = 0;
+                break;
+            }
+        }
+        if (pode_colocar) {
+            for (int i = 0; i < 3; i++) {
+                tabuleiro[linha_inicio_diag_asc - i][coluna_inicio_diag_asc + i] = navio_diagonal_asc[i];
+            }
+        } else {
+            printf("Erro: sobreposição detectada no navio diagonal ascendente.\n");
+        }
+    } else {
+        printf("Erro: o navio diagonal ascendente não cabe na posição especificada.\n");
+    }
+
     // Imprime o cabeçalho com letras
     printf("   ");
     for (int j = 0; j < colunas_tabuleiro; j++) {
