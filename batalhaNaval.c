@@ -102,6 +102,85 @@ int main() {
         printf("Erro: o navio diagonal ascendente não cabe na posição especificada.\n");
     }
 
+    // Implementação das habilidades especiais
+    // Define a habilidade em forma de cone (ponto de origem no topo)
+    int linha_origem_cone = 1;
+    int coluna_origem_cone = 2;
+    int altura_cone = 3;
+    
+    // Verifica se o cone cabe completamente no tabuleiro (vertical e horizontalmente)
+    int largura_maxima_cone = 2 * altura_cone - 1;
+    int meio_cone = largura_maxima_cone / 2;
+    
+    if (linha_origem_cone + altura_cone <= linhas_tabuleiro && 
+        coluna_origem_cone - meio_cone >= 0 && 
+        coluna_origem_cone + meio_cone < colunas_tabuleiro) {
+        
+        // Aplica a habilidade cone no tabuleiro
+        for (int i = 0; i < altura_cone; i++) {
+            int largura = 2 * i + 1;
+            int coluna_inicio = coluna_origem_cone - i;
+            
+            for (int j = 0; j < largura; j++) {
+                int coluna_atual = coluna_inicio + j;
+                tabuleiro[linha_origem_cone + i][coluna_atual] = 5;
+            }
+        }
+    } else {
+        printf("Erro: a habilidade cone não cabe na posição especificada.\n");
+    }
+
+    // Define a habilidade em forma de cruz (ponto de origem no centro)
+    int linha_origem_cruz = 4;
+    int coluna_origem_cruz = 7;
+    int tamanho_cruz = 5;
+    
+    // Aplica a habilidade cruz no tabuleiro
+    int raio_cruz = tamanho_cruz / 2;
+    // Verifica se cabe no tabuleiro
+    if (linha_origem_cruz - raio_cruz >= 0 && linha_origem_cruz + raio_cruz < linhas_tabuleiro &&
+        coluna_origem_cruz - raio_cruz >= 0 && coluna_origem_cruz + raio_cruz < colunas_tabuleiro) {
+        
+        // Marca a linha horizontal da cruz
+        for (int j = coluna_origem_cruz - raio_cruz; j <= coluna_origem_cruz + raio_cruz; j++) {
+            tabuleiro[linha_origem_cruz][j] = 5;
+        }
+        
+        // Marca a linha vertical da cruz
+        for (int i = linha_origem_cruz - raio_cruz; i <= linha_origem_cruz + raio_cruz; i++) {
+            tabuleiro[i][coluna_origem_cruz] = 5;
+        }
+    } else {
+        printf("Erro: a habilidade cruz não cabe na posição especificada.\n");
+    }
+
+    // Define a habilidade em forma de octaedro (losango) (ponto de origem no centro)
+    int linha_origem_octaedro = 8;
+    int coluna_origem_octaedro = 4;
+    int tamanho_octaedro = 3;
+    
+    // Aplica a habilidade octaedro no tabuleiro
+    int raio_octaedro = tamanho_octaedro / 2;
+    // Verifica se cabe no tabuleiro
+    if (linha_origem_octaedro - raio_octaedro >= 0 && linha_origem_octaedro + raio_octaedro < linhas_tabuleiro &&
+        coluna_origem_octaedro - raio_octaedro >= 0 && coluna_origem_octaedro + raio_octaedro < colunas_tabuleiro) {
+        
+        for (int i = linha_origem_octaedro - raio_octaedro; i <= linha_origem_octaedro + raio_octaedro; i++) {
+            int dist_vertical = i - linha_origem_octaedro;
+            if (dist_vertical < 0) dist_vertical = -dist_vertical;
+            
+            int largura = tamanho_octaedro - 2 * dist_vertical;
+            int coluna_inicio = coluna_origem_octaedro - largura / 2;
+            
+            for (int j = 0; j < largura; j++) {
+                int coluna_atual = coluna_inicio + j;
+                tabuleiro[i][coluna_atual] = 5;
+            }
+        }
+    } else {
+        printf("Erro: a habilidade octaedro não cabe na posição especificada.\n");
+    }
+
     // Imprime o cabeçalho com letras
     printf("   ");
     for (int j = 0; j < colunas_tabuleiro; j++) {
